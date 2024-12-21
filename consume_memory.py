@@ -3,6 +3,7 @@ import sys
 
 
 times = int(sys.argv[1])
+repeats = int(sys.argv[2] if len(sys.argv) > 2 else 1)
 
 
 def perform(times):
@@ -16,4 +17,5 @@ def perform(times):
 
 
 if __name__ == '__main__':
-    perform(times)
+    for _ in range(repeats):
+        perform(times)
