@@ -2,6 +2,16 @@ import time
 import sys
 import psycopg2
 import os
+import random
+import signal
+
+
+def handler(*args):
+    print("Terminating")
+    sys.exit(0)
+
+
+signal.signal(signal.SIGTERM, handler)
 
 
 times = int(sys.argv[1])
@@ -25,6 +35,14 @@ def perform(times):
             sys.exit(0)
         connections.append(connection)
         time.sleep(.1)
+    print(len(connections))
+    while True:
+        index = random.randint(0, len(connections) - 1)
+        print(index)
+        connection = connections[index]
+        cursor = connection.cursor()
+        cursor.execute("select 1;")
+        cursor.fetchall()
     end = time.time()
     print(f'Took {end-st} seconds to repeat {times} times.')
 
